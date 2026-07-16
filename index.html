@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CyberChimps — Encuesta de Feedback</title>
+  <meta name="description" content="Contanos qué te pareció CyberChimps: Co-op Puzzle. Tu feedback ayuda a mejorar el juego.">
+  <link rel="icon" type="image/png" href="assets/icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="scanlines" aria-hidden="true"></div>
+  <div class="bg-grid" aria-hidden="true"></div>
+
+  <header class="hero">
+    <div class="hero-banner">
+      <img src="assets/banner.png" alt="Dos chimpancés cooperando con una caja en CyberChimps">
+      <div class="hero-overlay"></div>
+    </div>
+    <div class="hero-content">
+      <img class="hero-icon" src="assets/icon.png" alt="Ícono de CyberChimps">
+      <h1 class="glitch" data-text="CYBERCHIMPS">CYBERCHIMPS</h1>
+      <p class="subtitle">// ENCUESTA DE FEEDBACK_</p>
+      <p class="hero-desc">
+        Jugaste <strong>CyberChimps: Co-op Puzzle</strong> y queremos saber qué te pareció.
+        Son ~3 minutos y tu respuesta es anónima. 🐒🔧
+      </p>
+      <a class="btn btn-primary btn-big" href="#form-start" id="startBtn">INICIAR ENCUESTA ▸</a>
+      <a class="store-link" href="https://play.google.com/store/apps/details?id=com.HKemtrentainment.Cyberchimps" target="_blank" rel="noopener">
+        ▶ Descargalo en Google Play
+      </a>
+    </div>
+  </header>
+
+  <main id="form-start">
+    <form id="surveyForm" novalidate>
+      <!-- honeypot anti-bots -->
+      <input type="text" name="website" id="website" tabindex="-1" autocomplete="off" aria-hidden="true" class="hp-field">
+
+      <div class="progress-wrap" id="progressWrap">
+        <div class="progress-label"><span id="progressText">PASO 1 / 6</span><span id="progressPct">16%</span></div>
+        <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+      </div>
+
+      <!-- ============ PASO 1: PERFIL ============ -->
+      <section class="step active" data-step="1">
+        <h2><span class="step-tag">01</span> TU PERFIL DE JUGADOR</h2>
+
+        <div class="field" data-field="descubrimiento">
+          <label class="q">¿Cómo conociste CyberChimps? <span class="req">*</span></label>
+          <div class="options">
+            <label class="opt"><input type="radio" name="descubrimiento" value="Un amigo me pasó el código de sala"><span>🔑 Un amigo me pasó el código de sala</span></label>
+            <label class="opt"><input type="radio" name="descubrimiento" value="Buscando en Google Play"><span>🔎 Buscando en Google Play</span></label>
+            <label class="opt"><input type="radio" name="descubrimiento" value="Redes sociales"><span>📱 Redes sociales</span></label>
+            <label class="opt"><input type="radio" name="descubrimiento" value="Conozco a los desarrolladores"><span>👋 Conozco a los desarrolladores</span></label>
+            <label class="opt"><input type="radio" name="descubrimiento" value="Otro"><span>✨ Otro</span></label>
+          </div>
+        </div>
+
+        <div class="field" data-field="companero">
+          <label class="q">¿Con quién jugaste en cooperativo? <span class="req">*</span></label>
+          <div class="options">
+            <label class="opt"><input type="radio" name="companero" value="Amigo/a"><span>🎮 Con un amigo/a</span></label>
+            <label class="opt"><input type="radio" name="companero" value="Pareja"><span>💚 Con mi pareja</span></label>
+            <label class="opt"><input type="radio" name="companero" value="Familiar"><span>🏠 Con un familiar</span></label>
+            <label class="opt"><input type="radio" name="companero" value="Desconocido"><span>🌐 Con alguien que no conocía</span></label>
+            <label class="opt"><input type="radio" name="companero" value="Todavía no jugué con nadie"><span>🙈 Todavía no jugué con nadie</span></label>
+          </div>
+        </div>
+
+        <div class="field" data-field="partidas">
+          <label class="q">¿Cuántas sesiones de juego llevás aproximadamente? <span class="req">*</span></label>
+          <div class="options options-row">
+            <label class="opt"><input type="radio" name="partidas" value="1"><span>1</span></label>
+            <label class="opt"><input type="radio" name="partidas" value="2-5"><span>2–5</span></label>
+            <label class="opt"><input type="radio" name="partidas" value="6-10"><span>6–10</span></label>
+            <label class="opt"><input type="radio" name="partidas" value="Más de 10"><span>+10</span></label>
+          </div>
+        </div>
+
+        <div class="field" data-field="dispositivo">
+          <label class="q">¿En qué tipo de celular jugás? <span class="req">*</span></label>
+          <div class="options">
+            <label class="opt"><input type="radio" name="dispositivo" value="Gama alta"><span>🚀 Gama alta (flagship reciente)</span></label>
+            <label class="opt"><input type="radio" name="dispositivo" value="Gama media"><span>⚙️ Gama media</span></label>
+            <label class="opt"><input type="radio" name="dispositivo" value="Gama baja / viejo"><span>🐢 Gama baja o un equipo viejito</span></label>
+            <label class="opt"><input type="radio" name="dispositivo" value="No sé"><span>🤷 No sé</span></label>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ PASO 2: MULTIJUGADOR ============ -->
+      <section class="step" data-step="2">
+        <h2><span class="step-tag">02</span> CONEXIÓN &amp; MULTIJUGADOR</h2>
+
+        <div class="field" data-field="facilidad_codigo">
+          <label class="q">¿Qué tan fácil fue crear una sala y unirte con el código de 6 letras? <span class="req">*</span></label>
+          <div class="rating" data-name="facilidad_codigo" data-low="Muy difícil" data-high="Muy fácil"></div>
+        </div>
+
+        <div class="field" data-field="estabilidad">
+          <label class="q">¿Qué tan estable fue la conexión durante las partidas? <span class="req">*</span></label>
+          <div class="rating" data-name="estabilidad" data-low="Muy inestable" data-high="Perfecta"></div>
+        </div>
+
+        <div class="field" data-field="problemas_red">
+          <label class="q">¿Tuviste alguno de estos problemas? (podés marcar varios)</label>
+          <div class="options">
+            <label class="opt"><input type="checkbox" name="problemas_red" value="Desconexiones en medio de la partida"><span>🔌 Desconexiones en medio de la partida</span></label>
+            <label class="opt"><input type="checkbox" name="problemas_red" value="Lag / jugadores que se teletransportan"><span>👻 Lag / el otro jugador se "teletransporta"</span></label>
+            <label class="opt"><input type="checkbox" name="problemas_red" value="Objetos desincronizados entre host y cliente"><span>📦 Cajas u objetos desincronizados entre host y cliente</span></label>
+            <label class="opt"><input type="checkbox" name="problemas_red" value="No pude unirme con el código"><span>🚫 No pude unirme con el código</span></label>
+            <label class="opt"><input type="checkbox" name="problemas_red" value="Ninguno"><span>✅ Ninguno, todo fluido</span></label>
+          </div>
+        </div>
+
+        <div class="field" data-field="comunicacion">
+          <label class="q">¿Cómo se comunican con tu compañero mientras juegan? <span class="req">*</span></label>
+          <div class="options">
+            <label class="opt"><input type="radio" name="comunicacion" value="Llamada (WhatsApp/Discord/etc.)"><span>📞 Llamada (WhatsApp, Discord, etc.)</span></label>
+            <label class="opt"><input type="radio" name="comunicacion" value="Estamos en el mismo lugar"><span>🛋️ Estamos en el mismo lugar</span></label>
+            <label class="opt"><input type="radio" name="comunicacion" value="No nos comunicamos"><span>🤐 No nos comunicamos</span></label>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ PASO 3: CONTROLES ============ -->
+      <section class="step" data-step="3">
+        <h2><span class="step-tag">03</span> CONTROLES TÁCTILES</h2>
+
+        <div class="field" data-field="joystick">
+          <label class="q">¿Qué tan cómodo es el joystick virtual para moverte y saltar? <span class="req">*</span></label>
+          <div class="rating" data-name="joystick" data-low="Incómodo" data-high="Muy cómodo"></div>
+        </div>
+
+        <div class="field" data-field="interaccion">
+          <label class="q">¿Qué tan bien responden las acciones de agarrar objetos y empujar cajas? <span class="req">*</span></label>
+          <div class="rating" data-name="interaccion" data-low="Mal" data-high="Excelente"></div>
+        </div>
+
+        <div class="field" data-field="problema_controles">
+          <label class="q">¿Algo de los controles te frustró? (podés marcar varios)</label>
+          <div class="options">
+            <label class="opt"><input type="checkbox" name="problema_controles" value="El salto no responde cuando quiero"><span>🦘 El salto no responde cuando quiero</span></label>
+            <label class="opt"><input type="checkbox" name="problema_controles" value="Cuesta agarrar/empujar las cajas"><span>📦 Cuesta agarrar o empujar las cajas</span></label>
+            <label class="opt"><input type="checkbox" name="problema_controles" value="Los botones son muy chicos o están mal ubicados"><span>👆 Botones muy chicos o mal ubicados</span></label>
+            <label class="opt"><input type="checkbox" name="problema_controles" value="La cámara no ayuda"><span>🎥 La cámara no ayuda</span></label>
+            <label class="opt"><input type="checkbox" name="problema_controles" value="Nada"><span>✅ Nada, se controlan bien</span></label>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ PASO 4: PUZZLES Y NIVELES ============ -->
+      <section class="step" data-step="4">
+        <h2><span class="step-tag">04</span> PUZZLES &amp; NIVELES</h2>
+
+        <div class="field" data-field="dificultad">
+          <label class="q">¿Cómo sentiste la dificultad de los puzzles? <span class="req">*</span></label>
+          <div class="options">
+            <label class="opt"><input type="radio" name="dificultad" value="Muy fácil"><span>😴 Muy fácil</span></label>
+            <label class="opt"><input type="radio" name="dificultad" value="Fácil"><span>🙂 Fácil</span></label>
+            <label class="opt"><input type="radio" name="dificultad" value="Equilibrada"><span>⚖️ Equilibrada</span></label>
+            <label class="opt"><input type="radio" name="dificultad" value="Difícil"><span>🤔 Difícil</span></label>
+            <label class="opt"><input type="radio" name="dificultad" value="Muy difícil"><span>🔥 Muy difícil</span></label>
+          </div>
+        </div>
+
+        <div class="field" data-field="cooperacion">
+          <label class="q">¿Sentiste que los puzzles realmente exigen cooperar de a dos? <span class="req">*</span></label>
+          <div class="options">
+            <label class="opt"><input type="radio" name="cooperacion" value="Sí, la cooperación es obligatoria y se nota"><span>🤝 Sí, la cooperación es obligatoria y se nota</span></label>
+            <label class="opt"><input type="radio" name="cooperacion" value="A veces, algunos puzzles se resuelven solo"><span>🌓 A veces, algunos se podrían resolver solo</span></label>
+            <label class="opt"><input type="radio" name="cooperacion" value="No, uno solo hace casi todo"><span>🐒 No, uno solo hace casi todo el trabajo</span></label>
+          </div>
+        </div>
+
+        <div class="field" data-field="cyberdatas">
+          <label class="q">¿Buscás las Cyberdatas ocultas en los niveles? <span class="req">*</span></label>
+          <div class="options">
+            <label class="opt"><input type="radio" name="cyberdatas" value="Sí, intento juntarlas todas"><span>💾 ¡Sí, intento juntarlas todas!</span></label>
+            <label class="opt"><input type="radio" name="cyberdatas" value="Agarro las que encuentro de pasada"><span>👀 Agarro las que encuentro de pasada</span></label>
+            <label class="opt"><input type="radio" name="cyberdatas" value="No me interesan"><span>🚪 No me interesan, voy directo a la salida</span></label>
+            <label class="opt"><input type="radio" name="cyberdatas" value="No sabía que existían"><span>❓ No sabía que existían</span></label>
+          </div>
+        </div>
+
+        <div class="field" data-field="timer">
+          <label class="q">El tiempo límite de los niveles… <span class="req">*</span></label>
+          <div class="options">
+            <label class="opt"><input type="radio" name="timer" value="Le da emoción, me gusta"><span>⏱️ Le da emoción, me gusta</span></label>
+            <label class="opt"><input type="radio" name="timer" value="Está bien pero a veces estresa"><span>😅 Está bien, pero a veces estresa</span></label>
+            <label class="opt"><input type="radio" name="timer" value="Me estresa, jugaría sin tiempo"><span>🧘 Me estresa, preferiría jugar sin tiempo</span></label>
+            <label class="opt"><input type="radio" name="timer" value="Ni lo noté"><span>🤷 Ni lo noté</span></label>
+          </div>
+        </div>
+
+        <div class="field" data-field="vidas">
+          <label class="q">El sistema de 3 vidas con trampas y caídas al vacío te parece… <span class="req">*</span></label>
+          <div class="options">
+            <label class="opt"><input type="radio" name="vidas" value="Justo"><span>❤️❤️❤️ Justo</span></label>
+            <label class="opt"><input type="radio" name="vidas" value="Muy castigador, pierdo vidas de forma injusta"><span>💔 Muy castigador, pierdo vidas de forma injusta</span></label>
+            <label class="opt"><input type="radio" name="vidas" value="Muy permisivo, casi nunca muero"><span>🛡️ Muy permisivo, casi nunca muero</span></label>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ PASO 5: PRESENTACIÓN ============ -->
+      <section class="step" data-step="5">
+        <h2><span class="step-tag">05</span> GRÁFICOS &amp; RENDIMIENTO</h2>
+
+        <div class="field" data-field="graficos">
+          <label class="q">¿Qué te parece el estilo visual (los monos, los escenarios, la onda cyber)? <span class="req">*</span></label>
+          <div class="rating" data-name="graficos" data-low="No me gusta" data-high="Me encanta"></div>
+        </div>
+
+        <div class="field" data-field="rendimiento">
+          <label class="q">¿Cómo corre el juego en tu celu? <span class="req">*</span></label>
+          <div class="options">
+            <label class="opt"><input type="radio" name="rendimiento" value="Fluido siempre"><span>🚀 Fluido siempre</span></label>
+            <label class="opt"><input type="radio" name="rendimiento" value="Bien, con algún tirón ocasional"><span>👌 Bien, con algún tirón ocasional</span></label>
+            <label class="opt"><input type="radio" name="rendimiento" value="Con tirones frecuentes"><span>🐢 Con tirones frecuentes</span></label>
+            <label class="opt"><input type="radio" name="rendimiento" value="Se calienta o gasta mucha batería"><span>🔥 Se calienta el teléfono / gasta mucha batería</span></label>
+          </div>
+        </div>
+
+        <div class="field" data-field="ui">
+          <label class="q">¿Los menús y la interfaz (lobby, selector de nivel, HUD) son claros? <span class="req">*</span></label>
+          <div class="rating" data-name="ui" data-low="Confusos" data-high="Muy claros"></div>
+        </div>
+
+        <div class="field" data-field="anuncios">
+          <label class="q">Sobre los anuncios (banner en menús e intersticiales)… <span class="req">*</span></label>
+          <div class="options">
+            <label class="opt"><input type="radio" name="anuncios" value="Están bien, no molestan"><span>✅ Están bien, no molestan</span></label>
+            <label class="opt"><input type="radio" name="anuncios" value="Se toleran, pero podrían ser menos"><span>😐 Se toleran, pero podrían ser menos</span></label>
+            <label class="opt"><input type="radio" name="anuncios" value="Son demasiados / molestan"><span>😤 Son demasiados / molestan</span></label>
+            <label class="opt"><input type="radio" name="anuncios" value="Casi no vi anuncios"><span>👻 Casi no vi anuncios</span></label>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ PASO 6: VEREDICTO FINAL ============ -->
+      <section class="step" data-step="6">
+        <h2><span class="step-tag">06</span> VEREDICTO FINAL</h2>
+
+        <div class="field" data-field="puntuacion">
+          <label class="q">Puntuación general del juego <span class="req">*</span></label>
+          <div class="score-wrap">
+            <input type="range" name="puntuacion_slider" id="scoreSlider" min="1" max="10" value="5" step="1">
+            <div class="score-display"><span id="scoreValue">5</span><span class="score-max">/10</span></div>
+          </div>
+          <input type="hidden" name="puntuacion" id="puntuacionHidden">
+          <p class="hint">Deslizá para elegir tu nota.</p>
+        </div>
+
+        <div class="field" data-field="recomendacion">
+          <label class="q">¿Se lo recomendarías a un amigo para jugar juntos? <span class="req">*</span></label>
+          <div class="options">
+            <label class="opt"><input type="radio" name="recomendacion" value="Sí, ya lo hice"><span>📣 Sí, ¡ya lo hice!</span></label>
+            <label class="opt"><input type="radio" name="recomendacion" value="Sí, probablemente"><span>👍 Sí, probablemente</span></label>
+            <label class="opt"><input type="radio" name="recomendacion" value="No estoy seguro"><span>🤔 No estoy seguro</span></label>
+            <label class="opt"><input type="radio" name="recomendacion" value="No"><span>👎 No</span></label>
+          </div>
+        </div>
+
+        <div class="field" data-field="futuro">
+          <label class="q">¿Qué te gustaría ver en futuras actualizaciones? (podés marcar varios)</label>
+          <div class="options">
+            <label class="opt"><input type="checkbox" name="futuro" value="Más niveles"><span>🗺️ Más niveles</span></label>
+            <label class="opt"><input type="checkbox" name="futuro" value="Chat de voz integrado"><span>🎙️ Chat de voz integrado</span></label>
+            <label class="opt"><input type="checkbox" name="futuro" value="Modo para 3-4 jugadores"><span>👥 Modo para 3–4 jugadores</span></label>
+            <label class="opt"><input type="checkbox" name="futuro" value="Skins para los monos"><span>🎨 Skins para los monos</span></label>
+            <label class="opt"><input type="checkbox" name="futuro" value="Ranking de mejores tiempos"><span>🏆 Ranking de mejores tiempos</span></label>
+            <label class="opt"><input type="checkbox" name="futuro" value="Recompensas por juntar Cyberdatas"><span>💾 Recompensas por juntar Cyberdatas</span></label>
+            <label class="opt"><input type="checkbox" name="futuro" value="Niveles más difíciles"><span>🧠 Niveles más difíciles</span></label>
+          </div>
+        </div>
+
+        <div class="field" data-field="bugs">
+          <label class="q">¿Encontraste algún bug? Contanos qué pasó y en qué nivel.</label>
+          <textarea name="bugs" rows="3" maxlength="1000" placeholder="Ej: en el nivel tutorial la caja quedó atascada en la pared…"></textarea>
+        </div>
+
+        <div class="field" data-field="sugerencias">
+          <label class="q">Comentarios libres: lo que más te gustó, lo que cambiarías, ideas locas…</label>
+          <textarea name="sugerencias" rows="4" maxlength="2000" placeholder="Escribí lo que quieras 🐒"></textarea>
+        </div>
+
+        <div class="field" data-field="contacto">
+          <label class="q">Email (opcional, solo si querés que te contactemos por tu feedback)</label>
+          <input type="email" name="contacto" placeholder="tu@email.com" autocomplete="email">
+        </div>
+      </section>
+
+      <!-- NAV -->
+      <div class="nav-buttons" id="navButtons">
+        <button type="button" class="btn btn-ghost" id="prevBtn">◂ ANTERIOR</button>
+        <button type="button" class="btn btn-primary" id="nextBtn">SIGUIENTE ▸</button>
+        <button type="submit" class="btn btn-submit" id="submitBtn">🐒 TRANSMITIR FEEDBACK</button>
+      </div>
+      <p class="error-msg" id="stepError" role="alert"></p>
+    </form>
+
+    <!-- SUCCESS -->
+    <section class="success hidden" id="successScreen">
+      <div class="success-card">
+        <img src="assets/icon.png" alt="" class="success-icon">
+        <h2 class="glitch" data-text="¡FEEDBACK RECIBIDO!">¡FEEDBACK RECIBIDO!</h2>
+        <p class="terminal-line">&gt; datos_transmitidos.ok</p>
+        <p>Gracias por ayudarnos a mejorar CyberChimps. 🐒💚<br>Ahora agarrá a tu compañero y vuelvan al laberinto.</p>
+        <a class="btn btn-primary" href="https://play.google.com/store/apps/details?id=com.HKemtrentainment.Cyberchimps" target="_blank" rel="noopener">VOLVER A JUGAR ▸</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>CyberChimps: Co-op Puzzle © HK Entertainment · 2 jugadores. 1 objetivo. ¿Pueden lograrlo?</p>
+  </footer>
+
+  <script src="js/config.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
