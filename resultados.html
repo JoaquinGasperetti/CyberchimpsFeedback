@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CyberChimps — Resultados de la encuesta</title>
+  <meta name="robots" content="noindex">
+  <link rel="icon" type="image/png" href="assets/icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .stats-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 14px; margin-bottom: 34px;
+    }
+    .stat-card {
+      background: var(--bg-panel); border: 1px solid var(--border);
+      border-radius: 12px; padding: 18px; text-align: center;
+    }
+    .stat-card .num {
+      font-family: var(--font-display); font-size: 2rem; font-weight: 900;
+      color: var(--neon); text-shadow: 0 0 12px rgba(53,232,118,0.5);
+    }
+    .stat-card .lbl { color: var(--text-dim); font-size: 0.9rem; }
+    .chart-block { margin-bottom: 30px; }
+    .chart-block h3 {
+      font-family: var(--font-display); font-size: 0.95rem;
+      letter-spacing: 0.08em; color: #fff; margin-bottom: 12px;
+    }
+    .bar-row { display: flex; align-items: center; gap: 10px; margin-bottom: 7px; }
+    .bar-label { flex: 0 0 46%; font-size: 0.95rem; color: var(--text-dim); text-align: right; }
+    .bar-track { flex: 1; background: var(--bg-panel); border: 1px solid var(--border); border-radius: 6px; height: 22px; overflow: hidden; }
+    .bar-fill {
+      height: 100%; background: linear-gradient(90deg, var(--neon-dim), var(--neon));
+      box-shadow: 0 0 8px rgba(53,232,118,0.5); min-width: 2px;
+      transition: width 0.6s ease;
+    }
+    .bar-count { flex: 0 0 34px; font-weight: 700; color: var(--neon); font-size: 0.9rem; }
+    .answers { margin-top: 40px; }
+    .answer-card {
+      background: var(--bg-panel); border: 1px solid var(--border);
+      border-radius: 12px; padding: 16px 18px; margin-bottom: 14px;
+    }
+    .answer-card .meta { color: var(--cyan); font-size: 0.85rem; margin-bottom: 8px; font-family: var(--font-display); }
+    .answer-card dl { display: grid; grid-template-columns: minmax(120px, 32%) 1fr; gap: 4px 12px; font-size: 0.95rem; }
+    .answer-card dt { color: var(--text-dim); }
+    .answer-card dd { color: var(--text); word-break: break-word; }
+    .state-msg { text-align: center; color: var(--text-dim); padding: 50px 0; font-size: 1.1rem; }
+    .top-nav { text-align: center; margin: 24px 0; }
+  </style>
+</head>
+<body>
+  <div class="scanlines" aria-hidden="true"></div>
+  <div class="bg-grid" aria-hidden="true"></div>
+
+  <main>
+    <div class="top-nav">
+      <img src="assets/icon.png" alt="CyberChimps" style="width:72px;height:72px;border-radius:16px;border:2px solid var(--neon);box-shadow:0 0 18px rgba(53,232,118,0.4)">
+      <h1 class="glitch" data-text="RESULTADOS" style="font-family:var(--font-display);font-weight:900;font-size:clamp(1.5rem,5vw,2.4rem);letter-spacing:0.12em;color:#fff;text-shadow:0 0 18px rgba(53,232,118,0.65);margin:10px 0 4px">RESULTADOS</h1>
+      <p class="subtitle">// FEEDBACK EN VIVO_</p>
+      <p><a class="store-link" href="index.html">◂ Volver a la encuesta</a></p>
+    </div>
+
+    <div id="loading" class="state-msg">⏳ Cargando respuestas…</div>
+    <div id="content" class="hidden">
+      <div class="stats-grid" id="statsGrid"></div>
+      <div id="charts"></div>
+      <div class="answers">
+        <h2 style="font-family:var(--font-display);font-size:1.1rem;letter-spacing:0.1em;color:#fff;border-bottom:1px solid var(--border);padding-bottom:10px;margin-bottom:18px">📋 RESPUESTAS INDIVIDUALES</h2>
+        <div id="answerList"></div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <p>CyberChimps: Co-op Puzzle © HK Entertainment</p>
+  </footer>
+
+  <script src="js/config.js"></script>
+  <script>
+  (function () {
+    "use strict";
+
+    var LABELS = {
+      fecha: "Fecha", apodo: "Apodo", descubrimiento: "Cómo lo conoció",
+      companero: "Compañero de juego", partidas: "Sesiones", dispositivo: "Dispositivo",
+      facilidad_codigo: "Código de sala (1-5)", estabilidad: "Estabilidad (1-5)",
+      problemas_red: "Problemas de red", comunicacion: "Comunicación",
+      joystick: "Joystick (1-5)", interaccion: "Agarrar/empujar (1-5)",
+      problema_controles: "Frustraciones de control", dificultad: "Dificultad",
+      cooperacion: "Cooperación real", cyberdatas: "Cyberdatas", timer: "Timer",
+      vidas: "Sistema de vidas", graficos: "Gráficos (1-5)", rendimiento: "Rendimiento",
+      ui: "UI (1-5)", anuncios: "Anuncios", puntuacion: "Puntuación (1-10)",
+      recomendacion: "Recomendación", futuro: "Pedidos a futuro", bugs: "Bugs",
+      sugerencias: "Comentarios", idioma: "Idioma", pantalla: "Pantalla"
+    };
+
+    var loading = document.getElementById("loading");
+    var content = document.getElementById("content");
+
+    if (!STORE_URL) {
+      loading.textContent = "⚠ Almacenamiento no configurado todavía (STORE_URL vacío en js/config.js).";
+      return;
+    }
+
+    fetch(STORE_URL, { cache: "no-store" })
+      .then(function (r) { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
+      .then(render)
+      .catch(function (e) {
+        loading.textContent = "⚠ No se pudieron cargar las respuestas (" + e.message + "). Recargá en unos segundos.";
+      });
+
+    function render(blob) {
+      var rows = (blob && Array.isArray(blob.respuestas)) ? blob.respuestas : [];
+      loading.classList.add("hidden");
+      content.classList.remove("hidden");
+
+      if (!rows.length) {
+        document.getElementById("statsGrid").innerHTML =
+          '<div class="stat-card" style="grid-column:1/-1"><div class="num">0</div><div class="lbl">respuestas todavía — ¡compartí la encuesta! 🐒</div></div>';
+        return;
+      }
+
+      // ---- tarjetas resumen ----
+      var avg = function (key) {
+        var vals = rows.map(function (r) { return parseFloat(r[key]); }).filter(function (v) { return !isNaN(v); });
+        return vals.length ? (vals.reduce(function (a, b) { return a + b; }, 0) / vals.length) : null;
+      };
+      var pctRecom = rows.filter(function (r) {
+        return (r.recomendacion || "").indexOf("Sí") === 0;
+      }).length / rows.length * 100;
+
+      var stats = [
+        [rows.length, "respuestas"],
+        [fmt(avg("puntuacion")), "nota media /10"],
+        [fmt(avg("estabilidad")), "estabilidad /5"],
+        [fmt(avg("joystick")), "controles /5"],
+        [Math.round(pctRecom) + "%", "lo recomendaría"]
+      ];
+      document.getElementById("statsGrid").innerHTML = stats.map(function (s) {
+        return '<div class="stat-card"><div class="num">' + s[0] + '</div><div class="lbl">' + s[1] + "</div></div>";
+      }).join("");
+
+      // ---- distribuciones ----
+      var chartKeys = ["dificultad", "cooperacion", "rendimiento", "anuncios", "timer", "vidas", "cyberdatas", "futuro", "problemas_red", "problema_controles"];
+      var chartsHtml = chartKeys.map(function (key) {
+        var counts = {};
+        rows.forEach(function (r) {
+          var v = r[key];
+          if (v === undefined || v === null || v === "") return;
+          String(v).split(" | ").forEach(function (part) {
+            counts[part] = (counts[part] || 0) + 1;
+          });
+        });
+        var entries = Object.keys(counts).map(function (k) { return [k, counts[k]]; })
+          .sort(function (a, b) { return b[1] - a[1]; });
+        if (!entries.length) return "";
+        var max = entries[0][1];
+        return '<div class="chart-block"><h3>' + (LABELS[key] || key) + "</h3>" +
+          entries.map(function (e) {
+            return '<div class="bar-row"><div class="bar-label">' + esc(e[0]) +
+              '</div><div class="bar-track"><div class="bar-fill" style="width:' +
+              Math.round(e[1] / max * 100) + '%"></div></div><div class="bar-count">' + e[1] + "</div></div>";
+          }).join("") + "</div>";
+      }).join("");
+      document.getElementById("charts").innerHTML = chartsHtml;
+
+      // ---- respuestas individuales (más recientes primero) ----
+      var order = ["apodo", "descubrimiento", "companero", "partidas", "dispositivo",
+        "facilidad_codigo", "estabilidad", "problemas_red", "comunicacion",
+        "joystick", "interaccion", "problema_controles",
+        "dificultad", "cooperacion", "cyberdatas", "timer", "vidas",
+        "graficos", "rendimiento", "ui", "anuncios",
+        "puntuacion", "recomendacion", "futuro", "bugs", "sugerencias"];
+      document.getElementById("answerList").innerHTML = rows.slice().reverse().map(function (r, i) {
+        var when = r.fecha ? new Date(r.fecha).toLocaleString("es-AR") : "s/f";
+        var items = order.filter(function (k) { return r[k]; }).map(function (k) {
+          return "<dt>" + (LABELS[k] || k) + "</dt><dd>" + esc(String(r[k])) + "</dd>";
+        }).join("");
+        return '<div class="answer-card"><div class="meta">#' + (rows.length - i) + " · " + when +
+          "</div><dl>" + items + "</dl></div>";
+      }).join("");
+    }
+
+    function fmt(n) { return n === null ? "—" : (Math.round(n * 10) / 10); }
+    function esc(s) {
+      return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+    }
+  })();
+  </script>
+</body>
+</html>

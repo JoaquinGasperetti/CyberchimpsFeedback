@@ -178,33 +178,27 @@
       return;
     }
 
-    var email = form.elements["contacto"].value.trim();
-    if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      stepError.textContent = "⚠ El email no parece válido (o dejalo vacío).";
-      form.elements["contacto"].closest(".field").classList.add("invalid");
-      return;
-    }
-
     var data = collectData();
+    data.fecha = new Date().toISOString();
 
     submitBtn.disabled = true;
     submitBtn.textContent = "⏳ TRANSMITIENDO…";
 
-    if (!SURVEY_ENDPOINT) {
-      console.warn("[CyberChimps] SURVEY_ENDPOINT vacío: respuesta NO enviada (modo demo).", data);
+    if (!STORE_URL) {
+      console.warn("[CyberChimps] STORE_URL vacío: respuesta NO enviada (modo demo).", data);
       setTimeout(showSuccess, 800);
       return;
     }
 
-    // Apps Script acepta POST text/plain sin preflight CORS
-    fetch(SURVEY_ENDPOINT, {
-      method: "POST",
-      headers: { "Content-Type": "text/plain;charset=utf-8" },
-      body: JSON.stringify(data),
-      redirect: "follow"
-    })
-      .then(function (res) {
-        if (!res.ok) throw new Error("HTTP " + res.status);
+    // anti doble envío desde el mismo navegador
+    if (localStorage.getItem("cc_feedback_enviado")) {
+      showSuccess();
+      return;
+    }
+
+    submitWithRetry(data, 3)
+      .then(function () {
+        try { localStorage.setItem("cc_feedback_enviado", "1"); } catch (e) {}
         showSuccess();
       })
       .catch(function (err) {
@@ -214,6 +208,35 @@
         stepError.textContent = "⚠ Error de conexión al enviar. Probá de nuevo en unos segundos.";
       });
   });
+
+  // El blob es un JSON { respuestas: [...] }: se lee, se agrega la
+  // respuesta y se guarda completo. Con el volumen esperado la chance de
+  // pisarse entre dos envíos simultáneos es mínima; igual se reintenta.
+  function submitWithRetry(data, attempts) {
+    return fetch(STORE_URL, { cache: "no-store" })
+      .then(function (res) {
+        if (!res.ok) throw new Error("GET HTTP " + res.status);
+        return res.json();
+      })
+      .then(function (blob) {
+        if (!blob || !Array.isArray(blob.respuestas)) blob = { respuestas: [] };
+        blob.respuestas.push(data);
+        return fetch(STORE_URL, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(blob)
+        });
+      })
+      .then(function (res) {
+        if (!res.ok) throw new Error("PUT HTTP " + res.status);
+      })
+      .catch(function (err) {
+        if (attempts <= 1) throw err;
+        return new Promise(function (r) { setTimeout(r, 1200); }).then(function () {
+          return submitWithRetry(data, attempts - 1);
+        });
+      });
+  }
 
   function showSuccess() {
     form.classList.add("hidden");

@@ -245,7 +245,7 @@ main { max-width: 760px; margin: 0 auto; padding: 24px 20px 80px; }
 .score-max { font-size: 1.1rem; color: var(--text-dim); }
 
 /* ---- inputs de texto ---- */
-textarea, input[type="email"] {
+textarea, input[type="email"], input[type="text"]:not(.hp-field) {
   width: 100%;
   background: var(--bg-panel);
   border: 1px solid var(--border);
@@ -256,7 +256,7 @@ textarea, input[type="email"] {
   padding: 12px 14px;
   resize: vertical;
 }
-textarea:focus, input[type="email"]:focus {
+textarea:focus, input[type="email"]:focus, input[type="text"]:focus {
   outline: none; border-color: var(--neon);
   box-shadow: 0 0 12px rgba(53, 232, 118, 0.3);
 }
