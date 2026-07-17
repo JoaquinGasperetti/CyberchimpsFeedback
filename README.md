@@ -9,20 +9,20 @@ publicada con GitHub Pages. HTML + CSS + JS puro, sin dependencias ni build.
 
 ## Cómo funciona el almacenamiento
 
-Las respuestas se guardan en un blob público de [jsonblob.com](https://jsonblob.com)
-(sin cuentas ni claves). La URL del blob va en `js/config.js`:
+Las respuestas se guardan en una Google Sheet vía un Web App de Google
+Apps Script (guía completa en [apps-script/README.md](apps-script/README.md)).
+La URL del deploy va en `js/config.js`:
 
 ```js
-const STORE_URL = "https://jsonblob.com/api/jsonBlob/<id>";
+const SURVEY_ENDPOINT = "https://script.google.com/macros/s/XXXXX/exec";
 ```
 
-Cada envío lee el blob, agrega la respuesta y lo vuelve a guardar
-(con reintentos). `resultados.html` lee el mismo blob.
+- `POST` al endpoint agrega una fila a la Sheet (el formulario).
+- `GET` al endpoint devuelve todas las respuestas como JSON público
+  (lo que consume `resultados.html`).
 
-> ⚠ Al ser un almacenamiento público y editable, cualquiera con la URL
-> podría modificar los datos, y jsonblob borra blobs tras ~30 días sin
-> actividad. Para una encuesta casual alcanza; conviene hacer respaldos
-> descargando la URL del blob de vez en cuando.
+Nadie puede editar ni borrar respuestas desde afuera: la Sheet solo la
+maneja el dueño de la cuenta que hizo el deploy.
 
 ## GitHub Pages
 

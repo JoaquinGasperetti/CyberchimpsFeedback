@@ -100,12 +100,12 @@
     var loading = document.getElementById("loading");
     var content = document.getElementById("content");
 
-    if (!STORE_URL) {
-      loading.textContent = "⚠ Almacenamiento no configurado todavía (STORE_URL vacío en js/config.js).";
+    if (!SURVEY_ENDPOINT) {
+      loading.textContent = "⚠ Almacenamiento no configurado todavía (SURVEY_ENDPOINT vacío en js/config.js).";
       return;
     }
 
-    fetch(STORE_URL, { cache: "no-store" })
+    fetch(SURVEY_ENDPOINT, { cache: "no-store", redirect: "follow" })
       .then(function (r) { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
       .then(render)
       .catch(function (e) {

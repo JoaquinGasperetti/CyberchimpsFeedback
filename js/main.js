@@ -184,8 +184,8 @@
     submitBtn.disabled = true;
     submitBtn.textContent = "⏳ TRANSMITIENDO…";
 
-    if (!STORE_URL) {
-      console.warn("[CyberChimps] STORE_URL vacío: respuesta NO enviada (modo demo).", data);
+    if (!SURVEY_ENDPOINT) {
+      console.warn("[CyberChimps] SURVEY_ENDPOINT vacío: respuesta NO enviada (modo demo).", data);
       setTimeout(showSuccess, 800);
       return;
     }
@@ -209,26 +209,17 @@
       });
   });
 
-  // El blob es un JSON { respuestas: [...] }: se lee, se agrega la
-  // respuesta y se guarda completo. Con el volumen esperado la chance de
-  // pisarse entre dos envíos simultáneos es mínima; igual se reintenta.
+  // POST al Web App de Apps Script. text/plain evita el preflight CORS
+  // (Apps Script no responde OPTIONS); la respuesta sí es legible.
   function submitWithRetry(data, attempts) {
-    return fetch(STORE_URL, { cache: "no-store" })
+    return fetch(SURVEY_ENDPOINT, {
+      method: "POST",
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
+      body: JSON.stringify(data),
+      redirect: "follow"
+    })
       .then(function (res) {
-        if (!res.ok) throw new Error("GET HTTP " + res.status);
-        return res.json();
-      })
-      .then(function (blob) {
-        if (!blob || !Array.isArray(blob.respuestas)) blob = { respuestas: [] };
-        blob.respuestas.push(data);
-        return fetch(STORE_URL, {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(blob)
-        });
-      })
-      .then(function (res) {
-        if (!res.ok) throw new Error("PUT HTTP " + res.status);
+        if (!res.ok) throw new Error("HTTP " + res.status);
       })
       .catch(function (err) {
         if (attempts <= 1) throw err;
