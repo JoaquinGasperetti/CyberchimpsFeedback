@@ -114,6 +114,9 @@
 
     function render(blob) {
       var rows = (blob && Array.isArray(blob.respuestas)) ? blob.respuestas : [];
+      // por si la hoja tiene una fila de encabezados duplicada (carrera al
+      // crearse la Sheet), la descartamos como respuesta
+      rows = rows.filter(function (r) { return r.fecha !== "fecha"; });
       loading.classList.add("hidden");
       content.classList.remove("hidden");
 

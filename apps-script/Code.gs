@@ -50,13 +50,22 @@ function getSheet_() {
   if (!sheet) sheet = ss.insertSheet(SHEET_NAME);
 
   if (sheet.getLastRow() === 0) {
-    var headers = ["fecha"].concat(FIELDS);
-    sheet.appendRow(headers);
-    sheet.getRange(1, 1, 1, headers.length)
-      .setFontWeight("bold")
-      .setBackground("#1e9e4e")
-      .setFontColor("#ffffff");
-    sheet.setFrozenRows(1);
+    // lock para que dos requests simultáneos no dupliquen los encabezados
+    var lock = LockService.getScriptLock();
+    lock.waitLock(10000);
+    try {
+      if (sheet.getLastRow() === 0) {
+        var headers = ["fecha"].concat(FIELDS);
+        sheet.appendRow(headers);
+        sheet.getRange(1, 1, 1, headers.length)
+          .setFontWeight("bold")
+          .setBackground("#1e9e4e")
+          .setFontColor("#ffffff");
+        sheet.setFrozenRows(1);
+      }
+    } finally {
+      lock.releaseLock();
+    }
   }
   return sheet;
 }
@@ -91,6 +100,7 @@ function doGet() {
     var respuestas = [];
 
     for (var r = 1; r < values.length; r++) {
+      if (values[r][0] === "fecha") continue; // fila de encabezados duplicada
       var obj = {};
       for (var c = 0; c < headers.length; c++) {
         var v = values[r][c];
